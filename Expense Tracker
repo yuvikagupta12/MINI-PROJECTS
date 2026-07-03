@@ -1,1 +1,67 @@
+import csv
 
+# Add Expense
+def add_expense():
+    category = input("Enter category: ")
+    amount = input("Enter amount: ")
+
+    file = open("expenses.txt", "a")
+    file.write(category + "," + amount + "\n")
+    file.close()
+
+    print("Expense Added")
+
+# Summarize Expenses
+def summarize_expenses():
+    summary = {}
+
+    try:
+        file = open("expenses.txt", "r")
+
+        for line in file:
+            category, amount = line.strip().split(",")
+            amount = float(amount)
+
+            if category in summary:
+                summary[category] += amount
+            else:
+                summary[category] = amount
+
+        file.close()
+
+        print("\nExpense Summary")
+        for category in summary:
+            print(category, ":", summary[category])
+
+        csv_file = open("summary.csv", "w", newline="")
+        writer = csv.writer(csv_file)
+
+        writer.writerow(["Category", "Total"])
+
+        for category in summary:
+            writer.writerow([category, summary[category]])
+
+        csv_file.close()
+
+        print("Summary saved to summary.csv")
+
+    except FileNotFoundError:
+        print("expenses.txt file not found")
+
+# Main Menu
+while True:
+    print("\n1. Add Expense")
+    print("2. View Summary")
+    print("3. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        add_expense()
+    elif choice == "2":
+        summarize_expenses()
+    elif choice == "3":
+        print("Program Ended")
+        break
+    else:
+        print("Invalid Choice")

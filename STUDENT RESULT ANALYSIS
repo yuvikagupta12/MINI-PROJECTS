@@ -1,0 +1,76 @@
+# Student Result Analysis
+
+students = {}
+
+# Add Student
+def add_student():
+    name = input("Enter Student Name: ")
+    marks = float(input("Enter Marks: "))
+
+    students[name] = marks
+    print("Student Added Successfully!")
+
+# Display Results
+def display_results():
+    if not students:
+        print("No Records Found!")
+        return
+
+    print("\n----- Student Results -----")
+
+    for name, marks in students.items():
+        if marks >= 40:
+            result = "Pass"
+        else:
+            result = "Fail"
+
+        print(f"Name: {name} | Marks: {marks} | Result: {result}")
+
+# Calculate Statistics
+def analyze_results():
+    if not students:
+        print("No Records Found!")
+        return
+
+    marks_list = list(students.values())
+
+    total = sum(marks_list)
+    average = total / len(marks_list)
+    highest = max(marks_list)
+    lowest = min(marks_list)
+
+    print("\n----- Analysis -----")
+    print("Total Students:", len(students))
+    print("Average Marks:", average)
+    print("Highest Marks:", highest)
+    print("Lowest Marks:", lowest)
+
+# Main Menu
+while True:
+    print("\n===== STUDENT RESULT ANALYSIS =====")
+    print("1. Add Student")
+    print("2. Display Results")
+    print("3. Analyze Results")
+    print("4. Exit")
+
+    choice = input("Enter Choice: ")
+
+    try:
+        if choice == "1":
+            add_student()
+
+        elif choice == "2":
+            display_results()
+
+        elif choice == "3":
+            analyze_results()
+
+        elif choice == "4":
+            print("Program Ended")
+            break
+
+        else:
+            print("Invalid Choice!")
+
+    except ValueError:
+        print("Please enter valid marks.")
